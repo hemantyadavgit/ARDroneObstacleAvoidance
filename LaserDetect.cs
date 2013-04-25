@@ -19,25 +19,21 @@ namespace CameraCapture
         
         public Image<Gray, Byte> FindColor( Image<Bgr, Byte> src, int hue_low, int hue_high )
         {
-            // Initialize HSV and Gray copies of image for color searching and thresholding
+            
             Image<Hsv, Byte> img_HSV = src.Convert<Hsv, Byte>();
             Image<Gray, Byte> img_thresh = new Image<Gray, Byte>( CvInvoke.cvGetSize( src ) );
 
-            // Initialize low and high color bounds for thresholding
+            
             MCvScalar low =  new MCvScalar( hue_low,  100, 100 );
             MCvScalar high = new MCvScalar( hue_high, 255, 255 );
 
-            // Threshold the HSV copy for input color range and output result in a Gray image
+            
             CvInvoke.cvInRangeS( img_HSV, low, high, img_thresh );
 
-            // Return image thresholded for input color
+            
             return img_thresh;
         }
-        //------------------------------------------------------------------------------------------
-
-        //------------------------------------------------------------------------------------------
-        // Find laser pointer dot in an image
-        //------------------------------------------------------------------------------------------
+        
         public Point FindLaser( Image<Gray, Byte> src )
         {
             double moment10, moment01;              // Moments used in locating laser point
@@ -60,11 +56,7 @@ namespace CameraCapture
             // Return laser pointer position
             return laser;
         }
-        //------------------------------------------------------------------------------------------
-
-        //------------------------------------------------------------------------------------------
-        // Overlay an image on another image
-        //------------------------------------------------------------------------------------------
+        
         public void OverlayImage( Image<Bgr, Byte> src, Image<Bgr, Byte> over, Point loc,
                                   MCvScalar S, MCvScalar D )
         {
@@ -91,22 +83,18 @@ namespace CameraCapture
             }
 
         }
-        //------------------------------------------------------------------------------------------
-
-        //------------------------------------------------------------------------------------------
-        // Draw a crosshair on an image
-        //------------------------------------------------------------------------------------------
+        
         public void DrawCrosshair( int x, int y, MCvScalar color, Image<Bgr, Byte> src )
         {
             Point point_laser, point_left, point_right, point_top, point_bottom;
 
-            // Set points for drawing crosshair
+            /*
             point_laser = new Point( x, y );
             point_left = new Point( 0, y );
             point_top = new Point( x, 0 );
             point_right = new Point( CvInvoke.cvGetSize( src ).Width, y );
             point_bottom = new Point( x, CvInvoke.cvGetSize( src ).Height );
-
+			*/
             // If image center tracking is desired
             /*
             point_laser = new Point( 320, 240 );
@@ -240,10 +228,9 @@ namespace CameraCapture
                 }
             }
 
-            // Convert the color map to the standard BGR
+            
             img_ready = img_heated.Convert<Bgr, Byte>();
-            // And overaly it on the start image with the input transparency
-            //OverlayImage( img_map, img_ready, origin, S, D );
+            
 
             return img_ready;
         }
